@@ -13,18 +13,31 @@ import image from './images/image.png';
 class App extends React.Component{
     //no need for constructor
     state = {
-        data:{}
+        data:{},
+        country:''
     }
+    //to get global data
     async componentDidMount(){
         const fetchedData = await fetchData();
 
         this.setState({data : fetchedData});
     }
 
+    //to get data of a specific country
+    handleCountryChange = async(country) =>{
+        
+        const fetchedData = await fetchData(country);
+        
+        console.log(country);
+        console.log(fetchedData);
+
+        this.setState({data : fetchedData , country : country});
+    }
+
     render(){
         //destructuring again (got rid of this.state in <Cards />)
        
-        const {data} = this.state;
+        const {data, country} = this.state;
         console.log(data);
         return(
             <div className={styles.container}>
@@ -32,9 +45,9 @@ class App extends React.Component{
                 <br/><br/>
                 <Cards data = {data}/>
                 <br/><br/>
-                <CountryPicker /> 
+                <CountryPicker handleCountryChange = {this.handleCountryChange}/> 
                 <br/><br/>
-                <Chart />
+                <Chart data={data} country={country}/>
             </div>
         )
     }
