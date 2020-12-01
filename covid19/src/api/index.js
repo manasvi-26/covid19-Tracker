@@ -15,6 +15,7 @@ export const fetchData = async (country) => {
 
         //destructuring data object into confimed,recoverd,...
         const {data : {confirmed, recovered, deaths, lastUpdate}} = await axios.get(changeableUrl);
+        console.log(lastUpdate)
         
         const modifiedData = {
         
